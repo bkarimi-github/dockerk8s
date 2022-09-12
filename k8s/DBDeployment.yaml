@@ -13,6 +13,10 @@ spec:
       labels:
         app: mysql
     spec:
+      volumes:
+        - name: mysql-db-storage
+          persistentVolumeClaim:
+            claimName: mysql-db-pv-claim
       containers:
         - name: mysql-container
           image: mysql:5.7
@@ -21,3 +25,6 @@ spec:
               value: secret
             - name: MYSQL_DATABASE
               value: todos
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              name: mysql-db-storage
